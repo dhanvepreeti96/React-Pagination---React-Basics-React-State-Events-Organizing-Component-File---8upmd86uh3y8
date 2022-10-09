@@ -16,6 +16,11 @@ const PostList = () => {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    fetchingData();
+  }, []);
+
   useEffect(() => {
     fetchingData();
     setData(null);
