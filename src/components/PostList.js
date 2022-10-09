@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Post } from "./Post";
 import { PaginationButtonsList } from "./PaginationButtonsList";
+import { fetchPosts } from "../api/fetchPosts";
 const PostList = () => {
   const [data, setData] = useState(null);
   const [pageId, setPageId] = useState(1);
   const fetchingData = async () => {
     try {
-      const response = await fetch(
-        `https://jsonplaceholder.typicode.com/posts?_page=${pageId}&_limit=5`
-      );
+      const response = await fetchPosts(pageId, 5);
       const data = await response.json();
       setData(data);
 
