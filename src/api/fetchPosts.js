@@ -1,5 +1,5 @@
-const fetchPosts = async (page, limit) => {
-  let url = `https://jsonplaceholder.typicode.com/posts?_page=${page}&_limit=${limit}`;
+const fetchPosts = async (pageId, limit) => {
+  let url = `https://jsonplaceholder.typicode.com/posts?_page=${pageId}&_limit=${limit}`;
   return fetch(url);
 };
 
