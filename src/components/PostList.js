@@ -32,7 +32,7 @@ const PostList = () => {
   //   console.log(loading);
   return (
     <>
-      {loading ? <Post details={data} /> : <h1 id="loader">loading...</h1>}
+      {loading ? <Post details={data} /> : <h1 id="loader">loading</h1>}
       <PaginationButtonsList details={data} onClick={pageNumberHandler} />
     </>
   );
