@@ -1,44 +1,45 @@
 import React, { useEffect, useState } from "react";
-import { Post } from "./Post";
-import { PaginationButtonsList } from "./PaginationButtonsList";
 import { fetchPosts } from "../api/fetchPosts";
+import { PaginationButtonsList } from "./PaginationButtonsList";
+import { Post } from "./Post";
+
 const PostList = () => {
   const [data, setData] = useState(null);
-  const [pageId, setPageId] = useState(1);
-  const fetchingData = async () => {
-    try {
-      const response = await fetchPosts(pageId, 5);
-      const data = await response.json();
-      setData(data);
+  const [page, setPage] = useState(1);
 
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
+  const loadData = async () => {
+    fetchPosts(page, 5)
+      .then((res) => res.json())
+      .then((jsonData) => {
+        setData(jsonData);
+      });
   };
 
   useEffect(() => {
-    fetchingData();
+    loadData();
   }, []);
 
   useEffect(() => {
-    fetchingData();
     setData(null);
-  }, [pageId]);
-  const pageNumberHandler = (pageNumber) => {
-    setPageId(pageNumber);
+    loadData();
+  }, [page]);
+
+  const clickHandler = (val) => {
+    setPage(val);
   };
 
   return (
     <>
-      {data !== null ? (
-        <Post details={data} />
-      ) : (
-        <h1 id="loader" className="loader">
+      {data == null ? (
+        <div id="loader" className="loader">
           loading
-        </h1>
+        </div>
+      ) : (
+        data.map((ele) => {
+          return <Post ele={ele} key={ele.id} />;
+        })
       )}
-      <PaginationButtonsList details={data} onClick={pageNumberHandler} />
+      <PaginationButtonsList page={page} clickHandler={clickHandler} />
     </>
   );
 };
